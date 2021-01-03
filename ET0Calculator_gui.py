@@ -14,7 +14,6 @@
 ##**
 ##**
 ##******************************************************************************
-from tkinter.filedialog import askopenfilename
 import tkinter as tk
 import pandas as pd
 
