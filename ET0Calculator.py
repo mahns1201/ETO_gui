@@ -42,7 +42,7 @@ import shutil
 
 
 def readinput_Metstation(Metstation):
-    filein = open("metstation_2018.dat",'r')
+    filein = open("metstation_2018.dat", 'r')
     line = filein.readline()
 
     while True:
@@ -68,7 +68,7 @@ def readinput_Climatefile(Metstation):
     filename = "MET" + str(Metstation) + ".csv"
 
     try:
-        filein = open(filename,'r')
+        filein = open(filename, 'r', encoding='UTF8')
         line = filein.readline()
 
         dailyclimate = list()
@@ -263,7 +263,9 @@ def fileET_calculation(Metstation, SOLAR):
     except IOError:
         print ("파입 출력 오류: 실행을 종료합니다.")
         sys.exit(0)
-           
+        
+
+'''
 def import_csv_data():
     global v
     global csv_file_path
@@ -306,13 +308,15 @@ tk.Button(root, text = "일조량", command = lambda: solar_amount()).grid(row =
 tk.Button(root, text = '확인',command = root.destroy).grid(row = 2, column = 2)
 
 root.mainloop()
+'''
 
+'''
 csv_file_path = csv_file_path.split('/')
 Metstation = csv_file_path[-1]
 Metstation = Metstation[3:6]
 
 
-## main
+
 def main():
     if SOLAR == "1" or SOLAR == "2":
         print ("%s를 선택하셨습니다." % SOLAR)
@@ -322,5 +326,5 @@ def main():
         sys.exit(0)
     
     fileET_calculation(Metstation, SOLAR)
+'''
         
-main()
