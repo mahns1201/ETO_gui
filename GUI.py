@@ -34,7 +34,6 @@ def run():
     # file_parse(df)
     eto.fileET_calculation(Metstation, SOLAR)
     root.destroy()
-    
 
 def open_csv():
     path = askopenfilename()
@@ -44,7 +43,7 @@ def open_csv():
 
 def rearrange_csv(SOLAR):
     path = filename.get()
-    df = pd.read_csv(path, encoding = 'cp949')
+    df = pd.read_csv(path, encoding = 'UTF8')
 
     for col in df.columns:
         parsed_col = col.replace(" ", "")

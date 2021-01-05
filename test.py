@@ -20,7 +20,7 @@ def rearrange_csv():
     if SOLAR == 1: df = df[[date, "최고기온", "최저기온", "상대습도", "평균풍속", "일조시간"]]
     elif SOLAR == 2: df = df[[date, "최고기온", "최저기온", "상대습도", "평균풍속", "일조량"]]
     
-    df.to_csv("MET090.csv", header=True, index=False)
+    df.to_csv("MET090.txt", header=True, index=False)
     
     return df
 

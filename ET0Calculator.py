@@ -68,7 +68,7 @@ def readinput_Climatefile(Metstation):
     filename = "MET" + str(Metstation) + ".csv"
 
     try:
-        filein = open(filename, 'r', encoding='UTF8')
+        filein = open(filename, 'r', encoding="UTF8")
         line = filein.readline()
 
         dailyclimate = list()
