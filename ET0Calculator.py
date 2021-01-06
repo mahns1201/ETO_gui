@@ -71,7 +71,7 @@ def readinput_Climatefile(Metstation):
         filein = open(filename, 'r', encoding="UTF8")
         line = filein.readline()
 
-        dailyclimate = list()
+        dailyclimate = []
         fmt = '%Y%m%d'
         
         while True:
