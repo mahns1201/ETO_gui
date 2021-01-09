@@ -10,9 +10,12 @@ root = Tk()
 
 root.title("기준증발산량 계산 프로그램")
 root.geometry("438x111")
-root.resizable(False, False)
+root.resizable(True, True)
 
-selection_list = ["최고기온", "최저기온", "상대습도", "평균풍속", "일조시간", "일조량"]
+# global variable
+selection_list = ["날짜", "최고기온", "최저기온", "상대습도", "평균풍속", "일조시간", "일조량"]
+key_order_time = ["날짜", "최고기온", "최저기온", "상대습도", "평균풍속", "일조시간"]
+key_order_amount = ["날짜", "최고기온", "최저기온", "상대습도", "평균풍속", "일조시간"]
 
 # command
 def run():
@@ -35,45 +38,47 @@ def run():
     eto.fileET_calculation(Metstation, SOLAR)
     root.destroy()
 
+def get_hedaer():
+    path = filename.get()
+    df = pd.read_csv(path, encoding="cp949")
+
+    header = list(df)
+
+    return header
+
 def open_csv():
     path = askopenfilename()
     filename.set(path)
 
-    return path
+    header = get_hedaer()
+    
+    data_label_col1.config(text=header[0])
+    data_label_col2.config(text=header[1])
+    data_label_col3.config(text=header[2])
+    data_label_col4.config(text=header[3])
+    data_label_col5.config(text=header[4])
+    data_label_col6.config(text=header[5])
 
 def rearrange_csv(SOLAR):
     path = filename.get()
-    df = pd.read_csv(path, encoding = 'UTF8')
+    df = pd.read_csv(path, encoding = 'cp949')
 
-    for col in df.columns:
-        parsed_col = col.replace(" ", "")
-        df.rename(columns={col:parsed_col}, inplace=True)
-    
-    for col in df.columns:
-        for i in selection_list:
-            if col.find(i) != -1: df.rename(columns={col:i}, inplace=True)
-    
-    date = df.columns[0]
+    if SOLAR == 1: 
+        df.columns = [key_order_time[0], key_order_time[1], key_order_time[2], 
+                    key_order_time[3], key_order_time[4], key_order_time[5]]
 
-    if SOLAR == 1: df = df[[date, "최고기온", "최저기온", "상대습도", "평균풍속", "일조시간"]]
-    elif SOLAR == 2: df = df[[date, "최고기온", "최저기온", "상대습도", "평균풍속", "일조량"]]
+        df = df[[key_order_time[0], key_order_time[1], key_order_time[2], 
+                key_order_time[3], key_order_time[4], key_order_time[5]]]
 
-    df.to_csv("MET090.csv", header=True, index=False)
+    elif SOLAR == 2:
+        df.columns = [key_order_amount[0], key_order_amount[1], key_order_amount[2], 
+                    key_order_amount[3], key_order_amount[4], key_order_amount[5]]
 
-    return df
+        df = df[[key_order_amount[0], key_order_amount[1], key_order_amount[2], 
+                key_order_amount[3], key_order_amount[4], key_order_amount[5]]]
 
-'''
-def file_parse(df):
-    filein = open("MET090.csv", 'w')
+    df.to_csv("MET090.csv", header=True, index=False, encoding="cp949")
 
-    for i in range(len(df)):
-        filein.write('\n')
-
-        for j in range(len(df.columns)):
-            filein.write(str(df.iloc[i, j]) + ',')
-
-    filein.close()
-'''
 
 def reset():
     box_1.set("선택하세요.")
@@ -116,7 +121,6 @@ box_6 = ttk.Combobox(root, width=10, height=4, values=selection_list, state="rea
 box_6.set("선택하세요.")
 
 browse_btn = Button(root, text = 'Browse', command=open_csv)
-
 
 filename = StringVar()
 filename_display = Entry(root, textvariable=filename, width=30, state="disabled")
