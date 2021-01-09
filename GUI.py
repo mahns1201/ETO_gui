@@ -59,21 +59,33 @@ def open_csv():
     data_label_col5.config(text=header[4])
     data_label_col6.config(text=header[5])
 
+def make_new_header():
+    new_header = []
+    new_header.append(box_1.get())
+    new_header.append(box_2.get())
+    new_header.append(box_3.get())
+    new_header.append(box_4.get())
+    new_header.append(box_5.get())
+    new_header.append(box_6.get())
+
+    return new_header
+
 def rearrange_csv(SOLAR):
     path = filename.get()
     df = pd.read_csv(path, encoding = 'cp949')
 
-    if SOLAR == 1: 
-        df.columns = [key_order_time[0], key_order_time[1], key_order_time[2], 
-                    key_order_time[3], key_order_time[4], key_order_time[5]]
+    header = get_hedaer()
+    new_header = make_new_header()
 
+    df.rename(columns={header[0]:new_header[0], header[1]:new_header[1],
+                        header[2]:new_header[2], header[3]:new_header[3],
+                        header[4]:new_header[4], header[5]:new_header[5]}, inplace=True) 
+
+    if SOLAR == 1:
         df = df[[key_order_time[0], key_order_time[1], key_order_time[2], 
                 key_order_time[3], key_order_time[4], key_order_time[5]]]
 
     elif SOLAR == 2:
-        df.columns = [key_order_amount[0], key_order_amount[1], key_order_amount[2], 
-                    key_order_amount[3], key_order_amount[4], key_order_amount[5]]
-
         df = df[[key_order_amount[0], key_order_amount[1], key_order_amount[2], 
                 key_order_amount[3], key_order_amount[4], key_order_amount[5]]]
 
