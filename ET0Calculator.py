@@ -64,20 +64,23 @@ def readinput_Metstation(Metstation):
     return latitude, stationheight, anemoheight
 
 ##02 Defining a function for reading the daily climate data
+##02 Defining a function for reading the daily climate data
 def readinput_Climatefile(Metstation):
     filename = "MET" + str(Metstation) + ".csv"
 
     try:
-        filein = open(filename, 'r', encoding="UTF8")
+        filein = open(filename, 'r', encoding="cp949")
         line = filein.readline()
 
         dailyclimate = []
-        fmt = '%Y%m%d'
+        # fmt = '%Y%m%d'
         
         while True:
             line = filein.readline()
+
             if not line:
                 break
+
             anslist = line.split(',')
             temp = anslist[0]
             anslist.append(temp)
@@ -89,8 +92,12 @@ def readinput_Climatefile(Metstation):
             dailyclimate.append(anslist)
             
         filein.close()
-
+        
         return dailyclimate
+    
+    except IOError:
+        print("***  파일 읽기 오류: 파일이 없거나 내용에 오류가 있습니다.")
+        sys.exit(1)
     
     except IOError:
         print("***  파일 읽기 오류: 파일이 없거나 내용에 오류가 있습니다.")
@@ -235,7 +242,7 @@ def fileET_calculation(Metstation, SOLAR):
         print("[ 기상자료 읽는 중....... ]")
         inclimate = readinput_Climatefile(Metstation)
  
-        filename = "PMET0_"+Metstation+ ".dat"
+        filename = "PMET0_" + Metstation + ".dat"
         fileout = open(filename, 'w')
         fileout.write ("\nDate(yyyymmdd)  P-M ET0(mm)")
         fileout.write ("\n=================================")
@@ -263,68 +270,3 @@ def fileET_calculation(Metstation, SOLAR):
     except IOError:
         print ("파입 출력 오류: 실행을 종료합니다.")
         sys.exit(0)
-        
-
-'''
-def import_csv_data():
-    global v
-    global csv_file_path
-
-    csv_file_path = askopenfilename()
-    print(csv_file_path)
-    v.set(csv_file_path)
-    df = pd.read_csv(csv_file_path, encoding = 'cp949')
-
-    print(df)
-
-    return csv_file_path
-
-SOLAR = 0
-
-def solar_time():
-    global SOLAR
-    SOLAR = '1'
-
-    print("일조시간을 선택하셨습니다.")
-    return SOLAR
-
-def solar_amount():
-    global SOLAR
-    SOLAR = '2'
-
-    print("일조량을 선택하셨습니다.")
-    return SOLAR
-
-root = tk.Tk()
-root.title("기준증발산량 계산")
-tk.Label(root, text='파일 순서: ').grid(row = 0, column = 0)
-tk.Label(root, text='날짜, 최고기온, 최저기온, 상대습도, 평균풍속, 일조시간 or 일조량').grid(row = 0, column = 1)
-v = tk.StringVar()
-entry = tk.Entry(root, textvariable=v).grid(row = 1, column = 1)
-
-tk.Button(root, text = 'Browse',command=import_csv_data).grid(row = 1, column = 0)
-tk.Button(root, text = "일조시간", command = lambda: solar_time()).grid(row = 2, column = 0)
-tk.Button(root, text = "일조량", command = lambda: solar_amount()).grid(row = 2, column = 1)
-tk.Button(root, text = '확인',command = root.destroy).grid(row = 2, column = 2)
-
-root.mainloop()
-'''
-
-'''
-csv_file_path = csv_file_path.split('/')
-Metstation = csv_file_path[-1]
-Metstation = Metstation[3:6]
-
-
-
-def main():
-    if SOLAR == "1" or SOLAR == "2":
-        print ("%s를 선택하셨습니다." % SOLAR)
-
-    else:
-        print ("잘못 선택하셨습니다. 1과 2 중에 하나만 입력하세요!")
-        sys.exit(0)
-    
-    fileET_calculation(Metstation, SOLAR)
-'''
-        
