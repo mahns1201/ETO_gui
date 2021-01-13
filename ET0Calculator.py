@@ -250,9 +250,22 @@ def fileET_calculation(Metstation, SOLAR):
         dailyclimate = list()
         for n in range(0, len(inclimate)):
             if SOLAR == "1":
-                pet = dailyReferenceET0_Sunhour(Metstation, inclimate[n][0], inclimate[n][1], inclimate[n][2], inclimate[n][3], inclimate[n][4], inclimate[n][5])
+                pet = dailyReferenceET0_Sunhour(Metstation, 
+                                                inclimate[n][0], 
+                                                inclimate[n][1], 
+                                                inclimate[n][2], 
+                                                inclimate[n][3], 
+                                                inclimate[n][4], 
+                                                inclimate[n][5])
             else:
-                pet = dailyReferenceET0_SolarRadiation(Metstation, inclimate[n][0], inclimate[n][1], inclimate[n][2], inclimate[n][3], inclimate[n][4], inclimate[n][5])
+                pet = dailyReferenceET0_SolarRadiation(Metstation, 
+                                                        inclimate[n][0], 
+                                                        inclimate[n][1], 
+                                                        inclimate[n][2], 
+                                                        inclimate[n][3], 
+                                                        inclimate[n][4], 
+                                                        inclimate[n][5])
+            
             climate  = [inclimate[n][0], inclimate[n][6], round(pet,2)]
             fileout.write ("\n%s       %5.1f" % (inclimate[n][0], pet))
             dailyclimate.append(climate)

@@ -100,6 +100,15 @@ def reset():
     box_5.set("선택하세요.")
     box_6.set("선택하세요.")
 
+def get_all_value():
+    all_value = box_1.get() + box_2.get() + box_3.get() + box_4.get() + box_5.get() + box_6.get()
+
+    return all_value
+
+def output(output):
+    pass
+
+# Exception
 def metstation_warning():
     msgbox.showwarning("경고", "\"metstation_2018.dat\" file에 해당 코드가 없습니다.")
 
@@ -109,13 +118,7 @@ def select_warning():
 def solar_warning():
     msgbox.showwarning("경고", "일조시간과 일조량 중 하나만 골라주세요.")
 
-def get_all_value():
-    all_value = box_1.get() + box_2.get() + box_3.get() + box_4.get() + box_5.get() + box_6.get()
 
-    return all_value
-
-def output(output):
-    pass
 
 
 # layout component
